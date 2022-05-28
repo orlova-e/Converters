@@ -4,6 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
+        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +16,22 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="appsettings.Docker.json" />
+      <Content Include="appsettings.Docker.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="appsettings.Development.json" />
+      <Content Include="appsettings.Development.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="appsettings.json" />
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
