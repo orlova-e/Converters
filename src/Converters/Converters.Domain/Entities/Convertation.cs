@@ -11,9 +11,5 @@ namespace Converters.Domain.Entities
         public DateTime? Updated { get; set; }
         public DateTime? Deleted { get; set; }
         public string Name { get; set; }
-        public Guid JsonFileId { get; set; }
-        public File JsonFile { get; set; }
-        public Guid XmlFileId { get; set; }
-        public File XmlFile { get; set; }
     }
 }
