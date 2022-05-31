@@ -55,15 +55,5 @@ public class ConvertationConfiguration : IEntityTypeConfiguration<Convertation>
             .HasColumnType(DataTypes.TimestampWithoutTimeZone)
             .HasColumnName("deleted")
             .IsRequired(false);
-
-        builder
-            .HasOne(x => x.JsonFile)
-            .WithOne()
-            .HasForeignKey("convertationid");
-        
-        builder
-            .HasOne(x => x.XmlFile)
-            .WithOne()
-            .HasForeignKey("convertationid");
     }
 }
