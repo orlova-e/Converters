@@ -38,7 +38,7 @@ internal static class Program
                     .ConfigureRunner(r => r
                         .AddPostgres()
                         .WithGlobalConnectionString(connectionString)
-                        .ScanIn(typeof(Cvt1).Assembly).For.Migrations())
+                        .ScanIn(typeof(Migration1).Assembly).For.Migrations())
                     .AddLogging(l => l.AddFluentMigratorConsole())
                     .BuildServiceProvider(false);
             });

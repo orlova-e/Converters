@@ -2,8 +2,8 @@
 
 namespace Converters.Infrastructure.Versions.Migrations;
 
-[Migration(2, "add convertations table")]
-public class Cvt2 : Migration
+[Migration(1, "add convertations table")]
+public class Migration1 : Migration
 {
     public override void Up()
     {
@@ -15,18 +15,8 @@ public class Cvt2 : Migration
             .WithColumn("created").AsDateTime().NotNullable()
             .WithColumn("updated").AsDateTime().Nullable()
             .WithColumn("deleted").AsDateTime().Nullable()
-            .WithColumn("jsonfileid").AsGuid().NotNullable()
-            .WithColumn("xmlfileid").AsGuid().NotNullable();
-        
-        Create
-            .ForeignKey("FK_convertations_jsonfileid")
-            .FromTable("convertations").ForeignColumn("jsonfileid")
-            .ToTable("files").PrimaryColumn("id");
-        
-        Create
-            .ForeignKey("FK_convertations_xmlfileid")
-            .FromTable("convertations").ForeignColumn("xmlfileid")
-            .ToTable("files").PrimaryColumn("id");
+            .WithColumn("jsonfilepath").AsString().NotNullable()
+            .WithColumn("xmlfilepath").AsString().NotNullable();
     }
 
     public override void Down()
