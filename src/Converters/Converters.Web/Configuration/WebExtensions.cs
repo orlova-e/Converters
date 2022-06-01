@@ -3,6 +3,8 @@ using Converters.Web.Services.Implementation;
 using Converters.Web.Services.Interfaces;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Converters.Web.Configuration;
 
@@ -17,8 +19,10 @@ public static class WebExtensions
             .Get<HubOptions>();
 
         services
+            .Configure<ValidationOptions>(configuration.GetSection(nameof(ValidationOptions)))
             .AddDistributedMemoryCache()
             .AddSession()
+            .AddOptions()
             .AddMvc().Services
             .AddSignalR()
             .AddHubOptions<ConvertersHub>(options =>
@@ -26,13 +30,15 @@ public static class WebExtensions
                 options.ClientTimeoutInterval = TimeSpan.FromSeconds(hubOptions.ClientTimeoutInterval);
                 options.KeepAliveInterval = TimeSpan.FromSeconds(hubOptions.KeepAliveInterval);
             });
-        
+
         services
             .AddMediatR(typeof(Program).Assembly)
             .AddFluentValidation(f =>
                 f.RegisterValidatorsFromAssemblyContaining<Program>())
             .AddTransient<ITranslator, Translator>()
-            .AddAutoMapper(typeof(Program).Assembly);
+            .AddAutoMapper(typeof(Program).Assembly)
+            .AddHttpContextAccessor()
+            .TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
         return services;
     }
