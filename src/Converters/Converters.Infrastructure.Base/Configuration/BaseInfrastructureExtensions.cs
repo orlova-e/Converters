@@ -13,7 +13,7 @@ public static class BaseInfrastructureExtensions
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         services
-            .AddDbContext<Context>(option => option.UseSqlite(connectionString));
+            .AddDbContext<Context>(option => option.UseNpgsql(connectionString));
 
         return services;
     }
