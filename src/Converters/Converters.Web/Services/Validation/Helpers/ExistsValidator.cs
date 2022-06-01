@@ -4,7 +4,7 @@ using Converters.Domain.Interfaces;
 using Converters.Domain.Services.Specs.Domain;
 using Converters.Infrastructure.DataAccess;
 
-namespace Notes.Web.API.Services.Validation.Helpers;
+namespace Converters.Web.API.Services.Validation.Helpers;
 
 public class ExistsValidator<TEntity, TDto> : AsyncPropertyValidator<TDto, Guid>
     where TEntity : class, IDomainEntity

@@ -2,7 +2,7 @@
 using Converters.Infrastructure.DataAccess;
 using FluentValidation;
 
-namespace Notes.Web.API.Services.Validation.Helpers;
+namespace Converters.Web.API.Services.Validation.Helpers;
 
 public static class ValidationExtensions
 {

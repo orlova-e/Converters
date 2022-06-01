@@ -2,7 +2,7 @@
 using Converters.Infrastructure.DataAccess;
 using Converters.Web.Models.Convertations;
 using FluentValidation;
-using Notes.Web.API.Services.Validation.Helpers;
+using Converters.Web.API.Services.Validation.Helpers;
 
 namespace Converters.Web.Services.Validation.Convertation;
 
