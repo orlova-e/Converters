@@ -1,0 +1,26 @@
+﻿version: '3.4'
+services:
+  converters-versions:
+    networks:
+      - converters-network
+    container_name: converters-versions
+    build:
+      context: ./../Converters
+      dockerfile: ./Dockerfile.Versions
+    depends_on:
+      - converters-db
+    env_file:
+      - versions.env
+
+  converters-db:
+    networks:
+      - converters-network
+    image: postgres:14.1
+    container_name: converters-db
+    ports:
+      - '5432:5432'
+    env_file:
+      - postgres.env
+
+networks:
+  converters-network:
