@@ -24,7 +24,6 @@ internal class Repository : IRepository
     {
         return _context
             .Set<T>()
-            .MatchInclude<T, TKey>()
             .FirstOrDefault(wherePredicate);
     }
 
@@ -42,7 +41,6 @@ internal class Repository : IRepository
     {
         return _context
             .Set<T>()
-            .MatchInclude<T, TKey>()
             .FirstOrDefaultAsync(wherePredicate, cancellationToken);
     }
 
@@ -51,13 +49,12 @@ internal class Repository : IRepository
     {
         return _context
             .Set<T>()
-            .MatchInclude<T, TKey>()
             .ToListAsync(cancellationToken);
     }
 
     public Task<List<T>> ListAsync<T, TKey>(
         Expression<Func<T, bool>> wherePredicate,
-        Expression orderByPredicate,
+        string orderByPredicate,
         SortDir sortDir,
         int? skip,
         int? take,
@@ -67,8 +64,7 @@ internal class Repository : IRepository
         return _context
             .Set<T>()
             .Where(wherePredicate)
-            .MatchInclude<T, TKey>()
-            .Provider.CreateQuery<T>(orderByPredicate)
+            .OrderBy(orderByPredicate, sortDir)
             .Skip(skip ?? 0)
             .Take(take ?? int.MaxValue)
             .ToListAsync(cancellationToken);

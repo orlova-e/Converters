@@ -1,22 +1,30 @@
-﻿using Converters.Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Converters.Domain.Entities;
+﻿using System.Linq.Expressions;
+using Converters.Domain.Conditions;
 
 namespace Converters.Infrastructure.DataAccess.Implementation;
 
 internal static class RepositoryExtensions
 {
-    public static IQueryable<TEntity> MatchInclude<TEntity, TKey>(this IQueryable<TEntity> source)
-        where TEntity : class, IEntity<TKey>, new()
+    public static IQueryable<T> OrderBy<T>(
+        this IQueryable<T> source,
+        string orderByProperty,
+        SortDir sortDir)
     {
-        var entity = new TEntity();
+        var type = typeof(T);
+        var property = type.GetProperty(orderByProperty);
+        var parameter = Expression.Parameter(type, "p");
+        var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+        var orderByExpression = Expression.Lambda(propertyAccess, parameter);
 
-        return entity switch
-        {
-            Convertation _ => (IQueryable<TEntity>) (source as IQueryable<Convertation>)
-                .Include(x => x.JsonFile)
-                .Include(x => x.XmlFile),
-            _ => source
-        };
+        var orderMethodName = sortDir == SortDir.Asc ? nameof(Queryable.OrderBy) : nameof(Queryable.OrderByDescending);
+        
+        MethodCallExpression resultExpression = Expression.Call(
+            typeof(Queryable),
+            orderMethodName,
+            new Type[] { type, property.PropertyType },
+            source.Expression,
+            Expression.Quote(orderByExpression));
+        
+        return source.Provider.CreateQuery<T>(resultExpression);
     }
 }

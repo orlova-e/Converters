@@ -20,7 +20,7 @@ public interface IRepository
     Task<List<T>> ListAsync<T, TKey>(Expression<Func<T, bool>> wherePredicate, CancellationToken cancellationToken)
         where T : class, IEntity<TKey>, new();
 
-    Task<List<T>> ListAsync<T, TKey>(Expression<Func<T, bool>> wherePredicate, Expression orderByPredicate,
+    Task<List<T>> ListAsync<T, TKey>(Expression<Func<T, bool>> wherePredicate, string orderByPredicate,
         SortDir sortDir, int? skip, int? take, CancellationToken cancellationToken)
         where T : class, IEntity<TKey>, new();
 
