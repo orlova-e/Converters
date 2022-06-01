@@ -56,4 +56,9 @@ public class FileManager : IFileManager
 
         return convertedPath;
     }
+
+    public Stream Get(string filename)
+    {
+        return File.OpenRead(filename);
+    }
 }

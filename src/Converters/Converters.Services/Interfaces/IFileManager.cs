@@ -4,4 +4,5 @@ public interface IFileManager
 {
     Task<string> SaveAsync(string fileName, Stream stream);
     Task<string> ConvertAsync(string fileName);
+    Stream Get(string filename);
 }
