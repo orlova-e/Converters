@@ -1,0 +1,12 @@
+﻿.converters-lead-font {
+    font-family: 'PT Sans', sans-serif;
+    text-transform: uppercase;
+}
+
+.converters-btn-style {
+    color: black;
+}
+
+.converters-inline-group .converters-inline-item {
+    margin-right: 1em;
+}
