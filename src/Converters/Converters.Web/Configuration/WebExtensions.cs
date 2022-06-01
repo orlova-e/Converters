@@ -17,6 +17,9 @@ public static class WebExtensions
             .Get<HubOptions>();
 
         services
+            .AddDistributedMemoryCache()
+            .AddSession()
+            .AddMvc().Services
             .AddSignalR()
             .AddHubOptions<ConvertersHub>(options =>
             {
