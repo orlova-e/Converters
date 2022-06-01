@@ -15,8 +15,7 @@ public class Migration1 : Migration
             .WithColumn("created").AsDateTime().NotNullable()
             .WithColumn("updated").AsDateTime().Nullable()
             .WithColumn("deleted").AsDateTime().Nullable()
-            .WithColumn("jsonfilepath").AsString().NotNullable()
-            .WithColumn("xmlfilepath").AsString().NotNullable();
+            .WithColumn("sessionid").AsGuid().NotNullable();
     }
 
     public override void Down()
