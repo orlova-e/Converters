@@ -11,6 +11,7 @@ public class ConvertFileCommand : IRequestHandler<ConvertFileRequest, HandlerRes
 {
     private readonly ILogger<ConvertFileCommand> _logger;
     private readonly IDateTimeService _dateTimeService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IFileManager _fileManager;
     private readonly IRepository _repository;
     private readonly ITranslator _translator;
@@ -19,6 +20,7 @@ public class ConvertFileCommand : IRequestHandler<ConvertFileRequest, HandlerRes
     public ConvertFileCommand(
         ILogger<ConvertFileCommand> logger,
         IDateTimeService dateTimeService,
+        IHttpContextAccessor httpContextAccessor,
         IFileManager fileManager,
         IRepository repository,
         ITranslator translator,
@@ -26,6 +28,7 @@ public class ConvertFileCommand : IRequestHandler<ConvertFileRequest, HandlerRes
     {
         _logger = logger;
         _dateTimeService = dateTimeService;
+        _httpContextAccessor = httpContextAccessor;
         _fileManager = fileManager;
         _repository = repository;
         _translator = translator;
@@ -44,7 +47,8 @@ public class ConvertFileCommand : IRequestHandler<ConvertFileRequest, HandlerRes
             
             var convertation = new Convertation
             {
-                Name = Path.GetFileNameWithoutExtension(fileName)
+                Name = Path.GetFileNameWithoutExtension(fileName),
+                SessionId = _httpContextAccessor.HttpContext.Session.Id
             };
         
             _dateTimeService.Created(convertation);
