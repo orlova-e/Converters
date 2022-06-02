@@ -5,6 +5,7 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using FileOptions = Converters.Services.Configuration.FileOptions;
 
 namespace Converters.Web.Configuration;
 
@@ -20,8 +21,7 @@ public static class WebExtensions
 
         services
             .Configure<ValidationOptions>(configuration.GetSection(nameof(ValidationOptions)))
-            .AddDistributedMemoryCache()
-            .AddSession()
+            .Configure<FileOptions>(configuration.GetSection(nameof(FileOptions)))
             .AddOptions()
             .AddMvc().Services
             .AddSignalR()

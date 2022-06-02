@@ -31,7 +31,6 @@ app
     .UseForwardedHeaders(new ForwardedHeadersOptions 
         {ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto})
     .UseHttpsRedirection()
-    .UseSession()
     .UseStaticFiles()
     .UseRouting()
     .UseEndpoints(endpoints =>
