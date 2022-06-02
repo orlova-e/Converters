@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,8 @@ public static class BaseInfrastructureExtensions
 
         services
             .AddDbContext<Context>(option => option.UseNpgsql(connectionString));
+        
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         return services;
     }
