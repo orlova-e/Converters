@@ -17,24 +17,33 @@ public class HomeController : Controller
     }
     
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] GetEntitiesDto dto)
+    public IActionResult Index()
     {
-        var result = await _mediator.Send(new GetConvertationsRequest(dto));
-        return this.Unwrap(result);
+        return View();
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAsync([FromRoute] DownloadConvertationDto dto)
+    [Route("[action]")]
+    public async Task<IActionResult> List([FromQuery] GetEntitiesDto dto)
+    {
+        var result = await _mediator.Send(new GetConvertationsRequest(dto));
+        return this.AsViewResult(result);
+    }
+    
+    [HttpGet]
+    [Route("download")]
+    public async Task<IActionResult> GetAsync([FromQuery] DownloadConvertationDto dto)
     {
         var result = await _mediator.Send(new GetConvertationRequest(dto));
         return this.Unwrap(result);
     }
     
     [HttpPost]
-    public async Task<IActionResult> GetAsync([FromForm] ConvertFileDto dto)
+    [Route("[action]")]
+    public async Task<IActionResult> Send(ConvertFileDto dto)
     {
         var result = await _mediator.Send(new ConvertFileRequest(dto));
-        return this.Unwrap(result);
+        return this.Unwrap(result, "list", "home");
     }
 
     public IActionResult Error()
