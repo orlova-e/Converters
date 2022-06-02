@@ -11,7 +11,7 @@ The application implements the function of uploading a file in json or xml forma
 - Docker
 - PostgreSQL
 - SignalR
-- FluentValidation, Automapper, MediatR.
+- FluentValidation, Automapper, MediatR, FluentMigrator.
 
 ### Build and run using Docker:
 
