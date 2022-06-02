@@ -2,5 +2,5 @@
 
 public class ConvertFileDto
 {
-    public IFormFile File { get; init; }
+    public IFormFile File { get; set; }
 }
