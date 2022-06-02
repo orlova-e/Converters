@@ -7,6 +7,7 @@ The application implements the function of uploading a file in json or xml forma
 ### Used technologies:
 - C# 10 / .NET 6
 - ASP.NET Core 6
+- Entity Framework Core 6
 - Docker
 - PostgreSQL
 - SignalR
