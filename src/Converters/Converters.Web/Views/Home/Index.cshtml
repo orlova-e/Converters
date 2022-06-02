@@ -1,4 +1,6 @@
-﻿<div class="uk-section uk-section-largemuted uk-section-secondary uk-light">
+﻿@model ConvertFileDto
+
+<div class="uk-section uk-section-largemuted uk-section-secondary uk-light">
     <div class="uk-container">
         <h2 class="uk-heading-bullet">Конвертировать</h2>
         <div class="uk-grid-match uk-child-width-1@m" uk-grid>
@@ -6,15 +8,15 @@
                 <p>Загрузите файл формата JSON или XML</p>
             </div>
 
-            <form enctype="multipart/form-data" method="post">
+            <form asp-action="Send" asp-controller="Home" enctype="multipart/form-data" method="post" id="convertersForm">
 
                 <div class="uk-inline">
                     <div uk-form-custom>
-                        <input type="file" id="fileInput" multiple>
+                        <input type="file" asp-for="File">
                         <button class="uk-button uk-button-default" type="button" tabindex="-1">Выбрать</button>
                     </div>
                     
-                    <button class="uk-button uk-button-secondary" id="sendFile" type="button">Отправить</button>
+                    <button class="uk-button uk-button-secondary" id="sendFile" type="submit">Отправить</button>
                     <br/>
                 </div>
 
@@ -22,42 +24,4 @@
 
         </div>
     </div>
-</div>
-
-<div class="container">              
-
-    <div class="uk-overflow-auto" id="convertationTable" style="display: none;">
-        <table class="uk-table uk-table-small uk-table-divider uk-table-striped ">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Загружен</th>
-                    <th>Имя</th>
-                    <th>JSON</th>
-                    <th>XML</th>
-                </tr>
-            </thead>
-            <tbody id="convertationTableBody">
-                <tr>
-                    <td>Table Data</td>
-                    <td>Table Data</td>
-                    <td>Table Data</td>
-                    <td>Table Data</td>
-                    <td>Table Data</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <ul class="uk-pagination uk-flex-center" uk-margin>
-        <li><a href="#"><span uk-pagination-previous></span></a></li>
-        <li><a href="#">1</a></li>
-        <li class="uk-disabled"><span>...</span></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li class="uk-active"><span>7</span></li>
-        <li><a href="#">8</a></li>
-        <li><a href="#"><span uk-pagination-next></span></a></li>
-    </ul>
-
 </div>
