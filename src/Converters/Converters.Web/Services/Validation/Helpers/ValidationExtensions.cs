@@ -11,6 +11,6 @@ public static class ValidationExtensions
         IRepository repository)
         where TEntity : class, IDomainEntity
     {
-        return ruleBuilder.SetAsyncValidator(new ExistsValidator<TEntity, TEditorDto>(repository));
+        return ruleBuilder.SetValidator(new ExistsValidator<TEntity, TEditorDto>(repository));
     }
 }
