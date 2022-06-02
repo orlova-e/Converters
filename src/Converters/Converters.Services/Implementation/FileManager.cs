@@ -38,9 +38,13 @@ public class FileManager : IFileManager
         }
 
         filePath = nameCounted;
-        
-        await using var fileStream = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-        await stream.CopyToAsync(fileStream);
+
+
+        stream.Position = 0;
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await stream.CopyToAsync(fileStream);
+        }
 
         return filePath;
     }
@@ -50,8 +54,7 @@ public class FileManager : IFileManager
         var converter = ConverterFactory.GetConverter(fileName);
         var filePath = Path.Combine(_fileOptions.FilePath, fileName);
 
-        var file = File.OpenRead(filePath);
-        var convertedPath = converter.Convert(file, out var fileConverted);
+        var convertedPath = converter.Convert(filePath, out var fileConverted);
         await File.WriteAllBytesAsync(convertedPath, fileConverted);
 
         return convertedPath;
@@ -59,6 +62,7 @@ public class FileManager : IFileManager
 
     public Stream Get(string filename)
     {
-        return File.OpenRead(filename);
+        var filePath = Path.Combine(_fileOptions.FilePath, filename);
+        return File.OpenRead(filePath);
     }
 }

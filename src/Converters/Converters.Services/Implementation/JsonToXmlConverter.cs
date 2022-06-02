@@ -15,15 +15,12 @@ internal class JsonToXmlConverter : IConverter
         return Encoding.UTF8.GetBytes(doc.OuterXml);
     }
 
-    public string Convert(FileStream fileStream, out byte[] data)
+    public string Convert(string filePath, out byte[] data)
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        fileStream.CopyTo(memoryStream);
-        
-        string json = Encoding.UTF8.GetString(memoryStream.ToArray());
-        XmlDocument doc = JsonConvert.DeserializeXmlNode(json);
+        var text = File.ReadAllText(filePath);
+        XmlDocument doc = JsonConvert.DeserializeXmlNode(text, "root");
         data = Encoding.UTF8.GetBytes(doc.OuterXml);
 
-        return Path.ChangeExtension(fileStream.Name, "xml");
+        return Path.ChangeExtension(filePath, "xml");
     }
 }

@@ -3,5 +3,5 @@
 public interface IConverter
 {
     byte[] Convert(Stream stream);
-    string Convert(FileStream fileStream, out byte[] data);
+    string Convert(string filePath, out byte[] data);
 }

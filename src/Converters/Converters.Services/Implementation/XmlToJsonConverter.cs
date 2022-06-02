@@ -9,26 +9,23 @@ internal class XmlToJsonConverter : IConverter
 {
     public byte[] Convert(Stream stream)
     {
-    //    string xml = Encoding.UTF8.GetString((stream as MemoryStream).ToArray());
         XmlDocument doc = new XmlDocument();
         doc.Load(stream);
-       // doc.LoadXml(xml);
 
         string json = JsonConvert.SerializeXmlNode(doc);
         return Encoding.UTF8.GetBytes(json);
     }
-
-    public string Convert(FileStream fileStream, out byte[] data)
+    
+    public string Convert(string filePath, out byte[] data)
     {
-        // using MemoryStream memoryStream = new MemoryStream();
-        // fileStream.CopyTo(memoryStream);
-        
+        var text = File.ReadAllText(filePath);
         XmlDocument doc = new XmlDocument();
-        doc.Load(fileStream);
+        doc.Load(text);
         
         string json = JsonConvert.SerializeXmlNode(doc);
         data = Encoding.UTF8.GetBytes(json);
+        data = Encoding.UTF8.GetBytes(doc.OuterXml);
 
-        return Path.ChangeExtension(fileStream.Name, "json");
+        return Path.ChangeExtension(filePath, "json");
     }
 }
