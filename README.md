@@ -12,7 +12,7 @@ The application implements the function of uploading a file in json or xml forma
 - SignalR
 - FluentValidation, Automapper, MediatR.
 
-### Build using Docker:
+### Build and run using Docker:
 
 In the /src/docker folder run:
 
