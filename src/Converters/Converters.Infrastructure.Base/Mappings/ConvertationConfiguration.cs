@@ -33,12 +33,6 @@ public class ConvertationConfiguration : IEntityTypeConfiguration<Convertation>
             .IsRequired();
         
         builder
-            .Property(x => x.SessionId)
-            .HasColumnType(DataTypes.Uuid)
-            .HasColumnName("sessionid")
-            .IsRequired();
-        
-        builder
             .Property(x => x.Name)
             .HasColumnType(DataTypes.Text)
             .HasColumnName("name")

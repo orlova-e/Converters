@@ -11,6 +11,5 @@ namespace Converters.Domain.Entities
         public DateTime? Updated { get; set; }
         public DateTime? Deleted { get; set; }
         public string Name { get; set; }
-        public string SessionId { get; set; }
     }
 }
