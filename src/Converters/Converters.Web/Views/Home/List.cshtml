@@ -1,0 +1,117 @@
+﻿@using Converters.Domain.Conditions
+@model GetConvertationsDto
+
+@{
+    string GetLink(Guid id, FileType type)
+    {
+        return Url.Action("Get", "Home", new
+        {
+            id = id,
+            type = type
+        });
+    }
+    
+    string GetThisPageUrl(int page)
+    {
+        return Url.Action("List", "Home", new
+        {
+            page = page,
+            itemsNumber = Model.ItemsPerPage,
+        });
+    }
+}
+
+<div class="uk-section uk-section-largemuted uk-section-secondary uk-light">
+    <div class="uk-container">
+        <h2 class="uk-heading-bullet">История</h2>
+    </div>
+</div>
+
+<div class="container">
+    
+    @if (Model.Entities.Count() == 0)
+    {
+        <div class="uk-overflow-auto" id="convertationTable" style="display: none;">
+            <table class="uk-table uk-table-small uk-table-divider uk-table-striped ">
+                <thead>
+                <tr>
+                    <th>Загружен</th>
+                    <th>Имя</th>
+                    <th>JSON</th>
+                    <th>XML</th>
+                </tr>
+                </thead>
+                <tbody id="convertationTableBody">
+                </tbody>
+            </table>
+        </div>
+        
+        <ul class="uk-pagination uk-flex-center" id="tablePagination" uk-margin style="display: none;">
+            <li><a href="#">1</a></li>
+        </ul>
+    }
+    else
+    {
+        <div class="uk-overflow-auto" id="convertationTable" >
+            <table class="uk-table uk-table-small uk-table-divider uk-table-striped ">
+                <thead>
+                <tr>
+                    <th>Загружен</th>
+                    <th>Имя</th>
+                    <th>JSON</th>
+                    <th>XML</th>
+                </tr>
+                </thead>
+                <tbody id="convertationTableBody">
+                @for (int i = 0; i < Model.Entities.Count(); i++)
+                {
+                    var element = Model.Entities.ElementAt(i);
+                    <tr>
+                        <td>@element.Created</td>
+                        <td>@element.Name</td>
+                        <td><a href="@GetLink(element.Id, FileType.Json)">Загрузить</a></td>
+                        <td><a href="@GetLink(element.Id, FileType.Xml)">Загрузить</a></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        
+        <ul class="uk-pagination uk-flex-center" id="tablePagination" uk-margin>
+            @{
+                const int pagesCount = 5;
+                const int firstCenter = 3;
+                int lastCenter = Model.TotalPages - 2;
+                if (Model.CurrentPage > 1)
+                {
+                    <li><a href="@GetThisPageUrl(Model.CurrentPage - 1)"><span uk-pagination-previous></span></a></li>
+                }
+                if (Model.TotalPages <= pagesCount)
+                {
+                    for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        string active = i == Model.CurrentPage ? "uk-active" : "uk-link-muted";
+                        <li class="@active"><a href="@GetThisPageUrl(i)">@i</a></li>
+                    }
+                }
+                else
+                {
+                    int i = Model.CurrentPage < firstCenter ? 1 : Model.CurrentPage - 2;
+                    int end = Model.CurrentPage < firstCenter ? pagesCount : Model.CurrentPage + 2;
+                    if (Model.CurrentPage >= lastCenter)
+                        end = Model.TotalPages;
+                    for (; i <= end; i++)
+                    {
+                        string active = i == Model.CurrentPage ? "uk-active" : "uk-link-muted";
+                        <li class="@active"><a href="@GetThisPageUrl(i)">@i</a></li>
+                    }
+                }
+                if (Model.CurrentPage < Model.TotalPages)
+                {
+                    <li><a href="@GetThisPageUrl(Model.CurrentPage + 1)"><span uk-pagination-next></span></a></li>
+                }
+            }
+        </ul>
+
+    }
+</div>
