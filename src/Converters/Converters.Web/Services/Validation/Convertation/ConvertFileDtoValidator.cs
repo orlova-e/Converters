@@ -8,11 +8,14 @@ namespace Converters.Web.Services.Validation.Convertation;
 public class ConvertFileDtoValidator : AbstractValidator<ConvertFileDto>
 {
     private readonly IOptions<ValidationOptions> _options;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ConvertFileDtoValidator(IOptions<ValidationOptions> options)
+    public ConvertFileDtoValidator(IOptions<ValidationOptions> options,
+        IHttpContextAccessor httpContextAccessor)
     {
         _options = options;
-        
+        _httpContextAccessor = httpContextAccessor;
+
         RuleFor(x => x.File)
             .Must(IsExtensionValid);
     }
