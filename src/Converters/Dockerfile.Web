@@ -1,0 +1,29 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+WORKDIR /app
+
+COPY *.sln .
+COPY Converters.Domain/*.csproj ./Converters.Domain/
+COPY Converters.Domain.Services/*.csproj ./Converters.Domain.Services/
+COPY Converters.Infrastructure.Base/*.csproj ./Converters.Infrastructure.Base/
+COPY Converters.Infrastructure.DataAccess/*.csproj ./Converters.Infrastructure.DataAccess/
+COPY Converters.Infrastructure.Versions/*.csproj ./Converters.Infrastructure.Versions/
+COPY Converters.Services/*.csproj ./Converters.Services/
+COPY Converters.Web/*.csproj ./Converters.Web/
+
+RUN dotnet restore
+
+COPY Converters.Domain/. ./Converters.Domain/
+COPY Converters.Domain.Services/. ./Converters.Domain.Services/
+COPY Converters.Infrastructure.Base/. ./Converters.Infrastructure.Base/
+COPY Converters.Infrastructure.DataAccess/. ./Converters.Infrastructure.DataAccess/
+COPY Converters.Services/. ./Converters.Services/
+COPY Converters.Web/. ./Converters.Web/
+
+WORKDIR /app/Converters.Web
+RUN dotnet publish -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+WORKDIR /app
+
+COPY --from=build-env /app/Converters.Web/out ./
+ENTRYPOINT [ "dotnet", "Converters.Web.dll" ]
