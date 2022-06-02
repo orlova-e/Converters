@@ -14,8 +14,7 @@ public class Migration1 : Migration
             .WithColumn("name").AsString().NotNullable()
             .WithColumn("created").AsDateTime().NotNullable()
             .WithColumn("updated").AsDateTime().Nullable()
-            .WithColumn("deleted").AsDateTime().Nullable()
-            .WithColumn("sessionid").AsGuid().NotNullable();
+            .WithColumn("deleted").AsDateTime().Nullable();
     }
 
     public override void Down()
