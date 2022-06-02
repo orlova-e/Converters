@@ -1,5 +1,32 @@
 ﻿version: '3.4'
 services:
+  converters-nginx:
+    networks:
+      - converters-network
+    container_name: converters-nginx
+    image: nginx:1.21.5
+    ports:
+      - '3000:80'
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - converters-backend
+
+  converters-backend:
+    networks:
+      - converters-network
+    container_name: converters-backend
+    build:
+      context: ./../Converters
+      dockerfile: ./Dockerfile.Web
+    volumes:
+      - files:/var/lib/images
+    depends_on:
+      - converters-db
+      - converters-versions
+    env_file:
+      - backend.env
+
   converters-versions:
     networks:
       - converters-network
@@ -24,3 +51,6 @@ services:
 
 networks:
   converters-network:
+    
+volumes:
+  files:
