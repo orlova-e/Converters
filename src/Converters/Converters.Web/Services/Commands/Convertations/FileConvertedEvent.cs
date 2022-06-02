@@ -5,9 +5,9 @@ namespace Converters.Web.Services.Commands.Convertations;
 
 public class FileConvertedEvent : INotification
 {
-    public GetConvertationDto Dto { get; }
+    public ClientConvertationDto Dto { get; }
 
-    public FileConvertedEvent(GetConvertationDto dto)
+    public FileConvertedEvent(ClientConvertationDto dto)
     {
         Dto = dto;
     }

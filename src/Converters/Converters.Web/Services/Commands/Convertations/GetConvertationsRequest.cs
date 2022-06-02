@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Converters.Web.Services.Commands.Convertations;
 
-public class GetConvertationsRequest : IRequest<HandlerResult<ListDto<GetConvertationDto>>>
+public class GetConvertationsRequest : IRequest<HandlerResult<GetConvertationsDto>>
 {
     public GetEntitiesDto Dto { get; }
 
