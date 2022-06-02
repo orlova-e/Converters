@@ -23,6 +23,9 @@ public interface IRepository
     Task<List<T>> ListAsync<T, TKey>(Expression<Func<T, bool>> wherePredicate, string orderByPredicate,
         SortDir sortDir, int? skip, int? take, CancellationToken cancellationToken)
         where T : class, IEntity<TKey>, new();
+    
+    int Count<T, TKey>(Expression<Func<T, bool>> wherePredicate)
+        where T : class, IEntity<TKey>;
 
     Task<int> CountAsync<T, TKey>(Expression<Func<T, bool>> wherePredicate, CancellationToken cancellationToken)
         where T : class, IEntity<TKey>;

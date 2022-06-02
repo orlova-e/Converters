@@ -70,6 +70,18 @@ internal class Repository : IRepository
             .ToListAsync(cancellationToken);
     }
 
+    public int Count<T, TKey>(Expression<Func<T, bool>> wherePredicate) where T : class, IEntity<TKey>
+    {
+        if (wherePredicate is null)
+        {
+            return _context.Set<T>().Count();
+        }
+        
+        return _context
+            .Set<T>()
+            .Count(wherePredicate);
+    }
+
     public Task<int> CountAsync<T, TKey>(Expression<Func<T, bool>> wherePredicate, CancellationToken cancellationToken)
         where T : class, IEntity<TKey>
     {
