@@ -9,28 +9,6 @@ const connection = new signalR.HubConnectionBuilder()
 connection.serverTimeoutInMilliseconds = 1000 * 60 * 2 * 15;
 
 const form = document.getElementById( "convertersForm" );
-// form.addEventListener( "submit", function ( event ) {
-//     event.preventDefault();
-//     var formData = new FormData(form);
-//
-//     postFile(formData);
-// } );
-
-//var sendButton = document.getElementById("sendFile");
-
-// sendButton.addEventListener("click", event => {
-//     var formData = new FormData();
-//
-//     var file = document.getElementById("fileInput");
-//
-//     formData.append("file", file.files[0]);
-//    
-//     let dto = {
-//       file: formData  
-//     };
-//
-//     postFile(formData);
-// });
 
 const addEventToList = convertationResult => {
     let table = document.getElementById("convertationTable");
@@ -77,13 +55,6 @@ const addEventToList = convertationResult => {
 
     jsonLink.appendChild(jsonA);
     xmlLink.appendChild(xmlA);
-    // let link = document.createTextNode("Загрузить");
-    // jsonA.appendChild(link);
-    // xmlA.appendChild(link);
-    
-    
-    // jsonLink.innerText = convertationResult.jsonDownloadPath;
-    // xmlLink.innerText = convertationResult.xmlDownloadPath;
 
     trow.appendChild(created);
     trow.appendChild(name);
@@ -96,22 +67,5 @@ const addEventToList = convertationResult => {
 connection.on("fileConverted", result => {
     addEventToList(result);
 });
-
-// const postFile = formData => {
-//     let request = new XMLHttpRequest();
-//     request.onreadystatechange = () => {
-//         if (request.readyState === 4) {
-//             if (request.status !== 200) {
-//                 addEventToList("Error on converting file");
-//             }
-//         }
-//     };
-//
-//     request.open("POST", "/send");
-//
-//     request.setRequestHeader("Content-Type", "multipart/form-data");
-//
-//     request.send(formData);
-// };
 
 connection.start().catch(err => console.error(err.toString()));
